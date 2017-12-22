@@ -16,10 +16,10 @@ import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.text.format.DateUtils;
 import android.util.Log;
-import android.util.TypedValue;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
+import android.view.animation.Interpolator;
 import android.widget.TextView;
 
 import com.example.xyzreader.R;
@@ -59,6 +59,9 @@ public class ArticleListActivity extends ActionBarActivity implements
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
 
+        //Addition of coordinate movement
+        animateViewsIn();
+
 
         final View toolbarContainerView = findViewById(R.id.toolbar_container);
 
@@ -71,7 +74,29 @@ public class ArticleListActivity extends ActionBarActivity implements
             refresh();
         }
     }
+    private void animateViewsIn() {
+        ViewGroup root = (ViewGroup) findViewById(R.id.root);
+        int count = root.getChildCount();
+        float offset = getResources().getDimensionPixelSize(R.dimen.offset_y);
+        Interpolator interpolator =
+                AnimationUtils.loadInterpolator(this, android.R.interpolator.linear_out_slow_in);
+        for (int i = 0; i < count; i++) {
+            View view = root.getChildAt(i);
+            view.setVisibility(View.VISIBLE);
+            view.setTranslationY(offset);
+            view.setAlpha(0.85f);
+            // then animate back to natural position
+            view.animate()
+                    .translationY(0f)
+                    .alpha(1f)
+                    .setInterpolator(interpolator)
+                    .setDuration(1500L)
+                    .start();
+            // increase the offset distance for the next view
+            offset *= 1.5f;
+        }
 
+    }
     private void refresh() {
         startService(new Intent(this, UpdaterService.class));
     }
