@@ -74,6 +74,8 @@ public class ArticleListActivity extends ActionBarActivity implements
             refresh();
         }
     }
+
+
     private void animateViewsIn() {
         ViewGroup root = (ViewGroup) findViewById(R.id.root);
         int count = root.getChildCount();
@@ -97,6 +99,11 @@ public class ArticleListActivity extends ActionBarActivity implements
         }
 
     }
+
+
+
+
+
     private void refresh() {
         startService(new Intent(this, UpdaterService.class));
     }
