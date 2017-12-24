@@ -22,7 +22,8 @@
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:background="@color/photo_placeholder"
-            android:transitionName="ShareThumbnail"/>
+            android:transitionName="ShareThumbnail"
+            android:scaleType="center"/>
 
         <TextView
             android:id="@+id/article_title"
